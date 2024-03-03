@@ -1,5 +1,5 @@
 // NoteGenerator.test.js
-const NoteGenerator = require('./NoteGenerator');
+import NoteGenerator from './NoteGenerator';
 
 describe('NoteGenerator', () => {
     let generator;
