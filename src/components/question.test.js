@@ -1,14 +1,15 @@
 import { question} from './question';
 
 // Tests answerIsMatch function
+    // answerIsMatch returns true when userAnswer matches question answer
     test('question: answerIsMatch() returns true when user answer matches question answer', () => {
         const q1 = new question("Is this a test question?", "Yes");
-        expect(q1.answerIsMatch("Yes").toBeTruthy);
+        expect(q1.answerIsMatch("Yes")).toBeTruthy();
     });
-
+// answerIsMatch returns false when userAnswer does not match question answer
     test('question: answerIsMatch() returns false when user answer does NOT match question answer', () => {
         const q1 = new question("Is this a test question?", "Yes");
-        expect(q1.answerIsMatch("No").toBeFalsy);
+        expect(q1.answerIsMatch("No")).toBeFalsy();
     });
 
 // Tests question creation

@@ -1,20 +1,36 @@
+import { questionManager } from './questionManager';
+
 class playNoteButton {
 
-    display(note) {
+    display() {
         // on click plays a note
     }
 }
 
 class submitButton {
+
+    constructor(qManager, rDisplay) {
+        this.qManager = qManager;
+        this.rDisplay = rDisplay;
+    }
+
     display() {
         // on click submit answer
+
+    }
+
+    onClick() {
+        let correctAnswer = this.qManager.submitQuestion();
+        if (correctAnswer) this.rDisplay.displayMessageCorrect();
+        else this.rDisplay.displayMessageIncorrect();
     }
 }
 
 class questionDisplay {
 
     display(question) {
-    // draw question to screen
+        // draw question to screen
+
     }
 }
 
@@ -23,14 +39,22 @@ class answerChoiceButtons {
     display() {
 
     }
+
+    onClick(qManager, answer) {
+        qManager.setUserAnswer(answer);
+    }
 }
 
-function displayMessageCorrect() {
-    //alert("Correct!");
+class resultsDisplay {
+
+    displayMessageCorrect() {
+        //alert("Correct!");
+    }
+
+    displayMessageIncorrect() {
+        //alert("Incorrect!");
+    }
 }
 
-function displayMessageIncorrect() {
-    //alert("Incorrect!");
-}
 
-export { playNoteButton, submitButton, questionDisplay, answerChoiceButtons, displayMessageCorrect, displayMessageIncorrect };
+export { playNoteButton, submitButton, questionDisplay, answerChoiceButtons, resultsDisplay };

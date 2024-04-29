@@ -46,14 +46,22 @@ class questionManager {
     }
 
     checkAnswerIsSelected() {
-        if (this.getUserAnswer() != this.invalidAnswer) {
+        if (this.getUserAnswer() !== this.invalidAnswer) {
             return true;
         }
         else return false;
     }
+
     checkAnswerIsCorrect() {
         let q = this.getCurrentQuestion();
         return q.answerIsMatch(this.userAnswer);
+    }
+
+    submitQuestion() {
+        let correctAnswer =  this.checkAnswerIsCorrect();
+        this.progressQuestionList();
+        this.resetUserAnswer();
+        return correctAnswer;
     }
 }
 
