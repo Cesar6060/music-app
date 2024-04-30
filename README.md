@@ -10,7 +10,7 @@ For our final submission, additional tests were added, redundant tests were remo
 
 As a result of these edits, the test suite now has nearly 40 tests to cover very basic functionality for the application. Even with our additional work accounted for, I am sure that with more time and experience, we would think of additional tests to add to further increase the thoroughness of the suite. While there is still much work to be done on the app itself, the test suite helps increase our confidence to move forward with designing more of the app's features.
 
-Overall, this assignment proved very valuable in furthering our understanding of the testing process.
+Overall, this assignment proved very valuable in furthering our understanding of the testing process. For a detailed list of modified and updated tests, please view the [Test Suite Changes document](/documents/Test%20Suite%20Changes.docx).
 
 ### Core Features
 
