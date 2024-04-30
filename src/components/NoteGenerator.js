@@ -6,16 +6,33 @@ class NoteGenerator {
         this.lastNote = null;
     }
 
-    generate() {
+    isValidNote(note) {
+        let validNote = false;
+        for (let i = 0; i < this.notes.length; i++) {
+            if (note === this.notes[i]) {
+                validNote = true;
+                break;
+            }
+        }
+        return validNote;
+    }
 
-        const randomIndex = Math.floor(Math.random() * this.notes.length);
+    generate(note = "none") {
+        if (this.isValidNote(note)) {
+            this.lastNote = note;
+        }
+        else {
+            const randomIndex = Math.floor(Math.random() * this.notes.length);
+            this.lastNote = this.notes[randomIndex];
+        }
 
-        this.lastNote = this.notes[randomIndex];
         return this.lastNote;
     }
 
     play(note) {
-        console.log(`Playing note: ${note}`);
+        let validNote = this.isValidNote(note);
+        if (validNote) console.log(`Playing note: ${note}`);
+        else console.log('Invalid note');
     }
 
     repeatLastNote() {

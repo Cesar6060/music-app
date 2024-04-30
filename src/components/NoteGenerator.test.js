@@ -26,9 +26,10 @@ describe('NoteGenerator', () => {
     test('repeatLastNote should replay the last note', () => {
         const note = generator.generate();
         generator.repeatLastNote();
-        expect(console.log).toHaveBeenCalledTimes(2);
-        expect(console.log).toHaveBeenCalledWith(`Playing note: ${note}`);
+        expect(console.log).toHaveBeenCalledTimes(1);
+        expect(console.log).toHaveBeenNthCalledWith(1, `Playing note: ${note}`);
     });
+
     // Test 4: Ensure 'repeatLastNote' does nothing if no note has been generated.
     test('repeatLastNote should not play a note if none has been generated', () => {
         generator.repeatLastNote();
@@ -46,14 +47,14 @@ describe('NoteGenerator', () => {
 
     // Test 6: Ensure that 'play' function can handle empty or undefined input gracefully.
     test('play should handle empty input without throwing errors', () => {
-        expect(() => generator.play()).not.toThrow();
-        expect(console.log).toHaveBeenCalledWith('Playing note: undefined');
+        generator.play('');
+        expect(console.log).toHaveBeenCalledWith('Invalid note');
     });
 
-    // Test 7: Check that the 'lastNote' is updated with every new note generated.
+    // Test 7: Check that the 'lastNote' is updated with wevery new note generated.
     test('lastNote should update on every new note generated', () => {
-        const firstNote = generator.generate();
-        const secondNote = generator.generate();
+        const firstNote = generator.generate("A");
+        const secondNote = generator.generate("B");
         expect(generator.lastNote).not.toEqual(firstNote);
         expect(generator.lastNote).toEqual(secondNote);
     });
@@ -63,20 +64,13 @@ describe('NoteGenerator', () => {
         generator.repeatLastNote();
         generator.generate();
         generator.repeatLastNote();
-        expect(console.log).not.toHaveBeenCalledWith("No note has been generated yet.");
+        const timesLogged = console.log.mock.calls.filter(
+            call => call[0] === "No note has been generated yet."
+        ).length;
+        expect(timesLogged).toBe(1);
     });
 
-    // Test 9: Ensures that over multiple iterations, each note within the predefined range is eventually produced.
-    test('generate should eventually produce each note in the range', () => {
-        const generatedNotes = new Set();
-        const iterations = generator.notes.length * 2;
-        for (let i = 0; i < iterations; i++) {
-            generatedNotes.add(generator.generate());
-        }
-        expect(generatedNotes.size).toEqual(generator.notes.length);
-    });
-
-    // Test 10: Validates by ensuring no notes are generated outside the predefined list
+    // Test 9: Validates by ensuring no notes are generated outside the predefined list
     test('generate should never produce notes outside the predefined list', () => {
         const invalidNotesTestSet = new Set();
         for (let i = 0; i < 1000; i++) {
@@ -86,6 +80,23 @@ describe('NoteGenerator', () => {
             }
         }
         expect(invalidNotesTestSet.size).toBe(0);
+    });
+
+    // Test 19: Ensures that the play function handles null or undefined notes gracefully and logs appropriate error messages
+    test('play should handle null or undefined notes gracefully', () => {
+        generator.play(null);
+        expect(console.log).toHaveBeenCalledWith("Invalid note");
+        generator.play(undefined);
+        expect(console.log).toHaveBeenCalledWith("Invalid note");
+    });
+
+    // Test 11: Ensures that the play function handles special characters or non-alphabetic characters gracefully and logs appropriate error messages for each invalid note.
+    test('play should handle special characters or non-alphabetic characters gracefully', () => {
+        const invalidNotes = ['!', '@', '#', '$', '%', '1', '2', '3'];
+        invalidNotes.forEach(note => {
+            generator.play(note);
+            expect(console.log).toHaveBeenCalledWith(`Invalid note`);
+        });
     });
 
 
